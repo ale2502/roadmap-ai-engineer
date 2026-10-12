@@ -4,6 +4,17 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-12
+
+**Step:** Step 0: Language (Python basics)
+**What I did:**
+- Finished the Input and Output lesson on learnpython.org.
+- Learned that `input()` reads one line as a string, `.split()` turns it into a list, and `map(int, ...)` converts the items. Input ends when Enter is pressed, and the loop ends when the list runs out.
+- Solved the "sum three integers" exercise; fixed a missing `total = 0` initialisation, and compared the loop version with `a, b, c = map(int, input().split())`.
+**Goal status:** in progress. Still to do: `pip` install and running a local script.
+**Stuck on / questions:** none
+**Next session:** Confirm the last classes and objects exercise is done, then do the Step 0 goal: create a venv, `pip install` a package, and run a local script.
+
 ## 2026-10-11
 
 **Step:** Step 0: Language (Python basics)
