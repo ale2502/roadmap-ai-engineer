@@ -4,6 +4,18 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-13
+
+**Step:** Step 0: Language (Python basics)
+**What I did:**
+- Fixed a broken `venv` (Homebrew Python's `pyexpat` was failing, so pip crashed) and rebuilt a clean `.venv`. Learned the terminal vs shell difference, what a venv is (like `node_modules` plus its own interpreter), and how activation works through `PATH`.
+- Ran `pip install requests`, traced where it landed with `pip show`, and used an isolation test to see the venv copy vs the shared copy. Created `.gitignore` and `requirements.txt`.
+- Read `fetch.py` before running it, then ran it (`cpython has 77630 stars`). Worked through how `import` runs a file and what `if __name__ == "__main__":` does, using `demo.py` and `use_fetch.py`.
+- Wrote `00-python/README.md` with my own summary, the step-by-step foundations, and the problems I hit.
+**Goal status:** met. Created a venv, installed a package with `pip`, and read and ran a local script.
+**Stuck on / questions:** none. `__name__` took several explanations to click, so worth a quick recap if it comes up again.
+**Next session:** Start Step 2 (LLM fundamentals): tokens first, with a tokenizer experiment in the venv.
+
 ## 2026-10-12
 
 **Step:** Step 0: Language (Python basics)
