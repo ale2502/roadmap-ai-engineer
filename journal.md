@@ -4,6 +4,17 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-14
+
+**Step:** Step 0: Language (Python basics), review before starting Step 2
+**What I did:**
+- Reflected on the Step 0 step-by-step: what happens without venv activation (`which python`, `pip show` to find where a package landed), why `requirements.txt` fixes "works on my machine", and how to debug a failed `pip install`.
+- Learned what a traceback is: read the last line for the error type, then scroll up for the real cause when it's vague (like `non-zero exit status 1`).
+- Re-explained `if __name__ == "__main__":` and checked `fetch.py`: only the `import`, `URL` and `def` sit outside the `if`, so importing it has no side effects. Connected it to cost: an unguarded LLM call would fire on every import.
+**Goal status:** met (Step 0). The review confirmed it; no new code this session.
+**Stuck on / questions:** Mixed up why `pydantic` failed in the venv while `requests` worked in both places (`pydantic` was only in the shared Python, `requests` was in both). Not yet retried. Also need to practise reading tracebacks.
+**Next session:** Retry the `pydantic` vs `requests` question in two sentences, then start Step 2 (LLM fundamentals): tokens first, with a tokenizer experiment in the venv.
+
 ## 2026-10-13
 
 **Step:** Step 0: Language (Python basics)
