@@ -1,10 +1,11 @@
 from sentence_transformers import SentenceTransformer, util
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
-texts = ["dog", "puppy", "invoice"]
+texts = ["invoice", "fatura", "fatura de energia", "cobrança", "boleto"]
 vectors = model.encode(texts)
 
 print(vectors.shape)
-print(util.cos_sim(vectors[0], vectors[1]))
-print(util.cos_sim(vectors[0], vectors[2]))
+
+for i in range(1, len(texts)):
+    print("invoice -", texts[i], util.cos_sim(vectors[0], vectors[i]).item())
