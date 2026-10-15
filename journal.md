@@ -4,6 +4,18 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-15
+
+**Step:** Step 2: LLM fundamentals (embeddings review)
+**What I did:**
+- Fixed the VS Code venv mix-up: the terminal can show `(.venv)` at the repo root while pointing at `00-python/.venv`. Check with `which python` or `Python: Select Interpreter`, and use `02-llm-fundamentals/.venv` for Step 2.
+- Reviewed embeddings: the 384 dimensions are positions in the vector with no names, and each holds a value. Closeness comes from training on usage patterns, and the model is frozen at `encode` time. Cosine similarity multiplies per dimension and sums, then divides by the vector lengths. It's a sum, not an average. `produto escalar` is the Portuguese for dot product.
+- Experiment: `dog` vs `cachorro` scored 0.26 with `all-MiniLM-L6-v2`, barely above `dog` vs `invoice` (0.22). The model is English-only, so it silently gives bad results for Portuguese, which matters for RAG in Step 5.
+- Renamed `00-python/README.md` to `00-python/SUMMARY-step-0-python.md`, wrote `02-llm-fundamentals/SUMMARY-step-2-llm-fundamentals.md` as a manual in my own words, and updated the `CLAUDE.md` naming convention for step summaries.
+**Goal status:** in progress. The first half (text → tokens → IDs → vectors, plus how similarity is scored) is solid. Still to do: the multilingual comparison, the `bank` experiment, then transformer basics (attention, next-token prediction).
+**Stuck on / questions:** Mixed up dimension vs value and sum vs average (both cleared up). Still need to make a prediction before each experiment, since I skipped the guess for `cachorro`.
+**Next session:** Run `pip freeze > requirements.txt` in `02-llm-fundamentals`. Then predict and run `dog` vs `cachorro` with `paraphrase-multilingual-MiniLM-L12-v2` and the two `bank` sentences against a money paraphrase, and fill in the experiments table in the Step 2 summary.
+
 ## 2026-10-14
 
 **Step:** Step 0 review, then Step 2: LLM fundamentals (tokens, embeddings intuition)

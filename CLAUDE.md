@@ -40,12 +40,12 @@ Create folders as the user reaches each step. Don't scaffold everything upfront.
 notes/                  # Free-form notes, glossary, resources
 ```
 
-Each step folder should have a `README.md` with: what was learned, how to run the code, and whether the step's **Goal** was met.
+Each step folder should have a summary file named `SUMMARY-step-<N>-<topic>.md` (e.g. `00-python/SUMMARY-step-0-python.md`, `02-llm-fundamentals/SUMMARY-step-2-llm-fundamentals.md`) with: the goal and status, how to run the code, the concepts in the user's own words, step-by-step foundations, and problems hit with fixes. It works as a manual to reread later. The step 0 file is the template. Keep `README.md` free for other uses.
 
 ## Lesson/code conventions
 
 - Python is the main language. Use a virtual environment (`python -m venv .venv`) and a `requirements.txt` (or `pyproject.toml`) per step or at the root.
-- Scripts should run locally with a single command documented in the step README.
+- Scripts should run locally with a single command documented in the step summary file.
 - Comments explain *why*, not *what*. Keep scripts small and readable. They are for learning.
 - Commit messages: short, imperative, English (e.g. `Add streaming script for step 3`).
 
