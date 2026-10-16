@@ -4,6 +4,17 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-16
+
+**Step:** Step 2: LLM fundamentals (embeddings wrap-up)
+**What I did:**
+- Created `02-llm-fundamentals/requirements.txt` with `pip freeze` (45 lines, mostly dependencies of `sentence-transformers`), and updated the two outdated mentions in the Step 2 summary. Added "similarity score" as another name for the cosine similarity number (the embedding is the vector, not the number).
+- Explained the `dog` vs `cachorro` jump (0.26 → 0.98): the multilingual model was trained on many languages, so translations land close together.
+- `bank` experiment with the multilingual model, comparing each sentence against a money paraphrase. My guesses were 0.8 and 0.3. Results: money sentence vs paraphrase 0.81, river sentence vs paraphrase 0.15, money vs river 0.34. The same word `bank` gets a different pull depending on the other words in the sentence. That is what attention does, and it is the first topic of transformer basics.
+**Goal status:** in progress. The embeddings half is done (word → tokens → IDs → context-aware vectors → similarity score). Still to do: how the model generates text (attention in more detail, next-token prediction).
+**Stuck on / questions:** I forgot the name of the number (cosine similarity / similarity score). I explained the `bank` result as "the context decides", which is right, but the mechanism (tokens attend to the neighboring words) is still new. Open: why `invoice` vs `fatura` is only 0.58 (is `fatura` as clean a translation of `invoice` as `cachorro` is of `dog`?). I skipped the prediction first, and ran only one pair, before the proper experiment.
+**Next session:** Start transformer basics: attention (how `bank` gets its meaning from neighboring words), then next-token prediction (how the model generates text). End by explaining the Step 2 goal in 2 minutes.
+
 ## 2026-10-15
 
 **Step:** Step 2: LLM fundamentals (embeddings review)

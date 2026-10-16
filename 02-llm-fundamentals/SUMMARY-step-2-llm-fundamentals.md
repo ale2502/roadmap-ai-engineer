@@ -17,7 +17,7 @@ python tokens.py
 python embeddings.py
 ```
 
-Installed versions when I wrote this: `tiktoken 0.14.0`, `sentence-transformers 6.1.0` (pulls in `torch` and `transformers`, so the install is large). The first run of `embeddings.py` downloads the model, so it needs internet. There is no `requirements.txt` yet: run `pip freeze > requirements.txt` to create it.
+Installed versions when I wrote this: `tiktoken 0.14.0`, `sentence-transformers 6.1.0` (pulls in `torch` and `transformers`, so the install is large). The first run of `embeddings.py` downloads the model, so it needs internet. `requirements.txt` pins every package (45 lines, including dependencies), so `pip install -r requirements.txt` can replace the `pip install` line above.
 
 Files:
 
@@ -36,7 +36,7 @@ Files:
 
 **Where the closeness comes from.** Training. The model reads a huge amount of text and learns to place texts that appear in similar contexts close together. "Dog" and "puppy" appear around "walk", "bark", "vet". "Invoice" appears around "payment", "due date". Nobody wrote a rule that dogs and puppies are related. The model doesn't know what a dog is, it only knows how the word is used. After training, the model is frozen: `encode` applies what it learned and doesn't learn anything, so the same text always gives the same vector.
 
-**Cosine similarity.** It compares two vectors across all 384 dimensions at once:
+**Cosine similarity.** (The number it returns is also called the *similarity score*, or just the *score*. The embedding is the vector, not this number.) It compares two vectors across all 384 dimensions at once:
 1. Multiply the two values in each dimension.
 2. Add up all 384 products (the dot product, *produto escalar*).
 3. Divide by the lengths of the two vectors, so only the direction matters.
@@ -70,4 +70,4 @@ The result is between -1 and 1. A high score means the vectors have large values
 - **"Dimension" vs "value".** A dimension is a slot (one of 384). The number in it is the value.
 - **Average vs sum.** The similarity score is a sum of the per-dimension products, normalized by vector length. It isn't an average.
 - **Wrong venv in VS Code.** The terminal can show `(.venv)` at the repo root while pointing at `00-python/.venv`, which doesn't have `tiktoken` or `sentence-transformers`. Check with `which python`, or use `Cmd+Shift+P` → `Python: Select Interpreter` and choose `02-llm-fundamentals/.venv`.
-- **No `requirements.txt` yet.** `sentence-transformers` pulls in many packages, so pin them with `pip freeze > requirements.txt`.
+- **No `requirements.txt`.** `sentence-transformers` pulls in many packages, so I pinned them all with `pip freeze > requirements.txt` (run inside `02-llm-fundamentals` with the right venv active).
