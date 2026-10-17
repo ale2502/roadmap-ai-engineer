@@ -51,6 +51,12 @@ The result is between -1 and 1. A high score means the vectors have large values
 
 **Next-token prediction.** A language model does one job: given all the tokens so far, give every token in the vocabulary (about 100,000) a score for being next. The scores add up to 1. For `The capital of France is`, ` Paris` is on top. `beautiful` gets a small score above zero, because "The capital of France is beautiful" is still a valid sentence. `banana` gets almost nothing.
 
+**Similarity score vs next-token score.** Two different numbers.
+- *Similarity score:* how close in meaning two texts are. It compares one pair of vectors and goes from -1 to 1. Each pair is independent, so `dog` vs `puppy` (0.80) and `dog` vs `invoice` (0.22) don't affect each other.
+- *Next-token score:* how likely each token in the vocabulary is to come next. Each goes from 0 to 1 and they all add up to 1, because the tokens compete for 100% of the probability. A final step called softmax makes them add up to 1, and temperature works on it.
+
+Check: `Paris` 0.7, `Lyon` 0.5, `banana` 0.1 is invalid because it adds up to 1.3. With only three options they must add up to 1 (for example 0.7, 0.2, 0.1).
+
 **The generation loop (autoregression).** After a token is picked, it is added to the end of the input, and the model reads the whole sequence again, including the new token. It scores every token again, picks one, and repeats until it picks a special stop token. The model's own output becomes part of its next input, which is what *autoregression* means.
 
 **Temperature.** The picked token is usually a high-scoring one, but not always the top one. A setting called *temperature* controls how much lower-scoring tokens get a chance. Low temperature stays close to the top score. High temperature spreads out. This is why the same prompt can give different answers.
@@ -90,5 +96,7 @@ The result is between -1 and 1. A high score means the vectors have large values
 - **Average vs sum.** The similarity score is a sum of the per-dimension products, normalized by vector length. It isn't an average.
 - **"It checks the surrounding words" has a name.** That step is attention. Say the word.
 - **"The best token" isn't always chosen.** The pick is usually a high-scoring token, but temperature lets lower-scoring ones through. That's why answers vary.
+- **Higher temperature for more similar answers.** Backwards: low temperature makes the top token win almost every time, so answers are more similar. It makes them consistent, not correct.
+- **Similarity score vs next-token score.** The first is -1 to 1 per pair and doesn't add up to anything. The second is a probability per token and adds up to 1.
 - **Wrong venv in VS Code.** The terminal can show `(.venv)` at the repo root while pointing at `00-python/.venv`, which doesn't have `tiktoken` or `sentence-transformers`. Check with `which python`, or use `Cmd+Shift+P` → `Python: Select Interpreter` and choose `02-llm-fundamentals/.venv`.
 - **No `requirements.txt`.** `sentence-transformers` pulls in many packages, so I pinned them all with `pip freeze > requirements.txt` (run inside `02-llm-fundamentals` with the right venv active).
