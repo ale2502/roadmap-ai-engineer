@@ -4,6 +4,18 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-17
+
+**Step:** Step 2: LLM fundamentals (transformer basics)
+**What I did:**
+- Attention: predicted that `bank` gets its meaning mostly from `river` in "I sat on the river bank" and from `money` in "I deposited money at the bank". Linked this to last session's `bank` experiment (0.81 vs 0.15): attention makes embeddings depend on context.
+- Next-token prediction: the model scores every token in the vocabulary (about 100,000), the scores add up to 1. For `The capital of France is`, I picked `Paris` on top and `beautiful` as a small non-zero score. Then the loop: the picked token is added to the input, the model reads it all again, until a stop token (autoregression).
+- Gave the Step 2 goal explanation in my own words. Corrections: name the surrounding-words step "attention", the model scores the whole vocabulary, and the best token isn't always picked (temperature).
+- Claude wrote the "Transformer basics" section in `SUMMARY-step-2-llm-fundamentals.md` because I need to read more before I can say it in my own words. Also added two entries to the mix-ups list. Fixed a stale VS Code Markdown preview (the file was fine on disk).
+**Goal status:** met. I explained text → tokens → vectors → attention → next-token scores → loop → stop token, but only at a basic level. The summary needs rereading until I can say it without looking.
+**Stuck on / questions:** I found the first prediction questions too abstract ("what do you think it scores highest compared to what?"), so a concrete example helped. Open: temperature is understood only as an idea, not tried. The two "To do" rows in the experiments table of the Step 2 summary are still empty, and so is the `invoice` vs `fatura` (0.58) question.
+**Next session:** Reread the "2-minute explanation" in the Step 2 summary and say it out loud without looking. Then start Step 3: call the provider API by hand and write a streaming script, so the token loop shows up live.
+
 ## 2026-10-16
 
 **Step:** Step 2: LLM fundamentals (embeddings wrap-up)

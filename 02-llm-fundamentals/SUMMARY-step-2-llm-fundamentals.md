@@ -2,7 +2,7 @@
 
 **Goal:** explain in 2 minutes how a word becomes a number and how the model generates text.
 
-**Status:** in progress. The first half is done (text → tokens → IDs → vectors). Still to do: more embedding experiments, then transformer basics (attention, next-token prediction).
+**Status:** goal met (2026-10-17). The "Transformer basics" section is written and needs rereading until I can say it without looking. Still to do: complete the two "To do" rows in the experiments log.
 
 ## How to run
 
@@ -43,6 +43,25 @@ Files:
 
 The result is between -1 and 1. A high score means the vectors have large values of the same sign in many of the same dimensions, so they point the same way. It's a *sum*, not an average. This model normalizes its vectors to length 1, so the dot product alone already gives the cosine. The score is the combined result of 384 small agreements and disagreements, not a verdict from any single dimension.
 
+## Transformer basics
+
+**Attention.** Each token looks at every other token in the sentence and asks, "which of you help me understand my meaning here?" Each other token gets an attention weight, and the weights add up to 1. In `I sat on the river bank`, `bank` gives most of its weight to `river`. In `I deposited money at the bank`, it gives most to `money`. All tokens do this at the same time, not one after another.
+
+**Attention and the `bank` experiment.** The same word `bank` got different vectors depending on the sentence (0.81 for the money sentence vs 0.15 for the river sentence, both against a money paraphrase). Attention is the reason: the vector for `bank` is adjusted using the words around it. This is why embeddings from a transformer depend on context, and why `all-MiniLM` and the multilingual model (both transformers) can tell the two meanings apart.
+
+**Next-token prediction.** A language model does one job: given all the tokens so far, give every token in the vocabulary (about 100,000) a score for being next. The scores add up to 1. For `The capital of France is`, ` Paris` is on top. `beautiful` gets a small score above zero, because "The capital of France is beautiful" is still a valid sentence. `banana` gets almost nothing.
+
+**The generation loop (autoregression).** After a token is picked, it is added to the end of the input, and the model reads the whole sequence again, including the new token. It scores every token again, picks one, and repeats until it picks a special stop token. The model's own output becomes part of its next input, which is what *autoregression* means.
+
+**Temperature.** The picked token is usually a high-scoring one, but not always the top one. A setting called *temperature* controls how much lower-scoring tokens get a chance. Low temperature stays close to the top score. High temperature spreads out. This is why the same prompt can give different answers.
+
+**Why this matters later.**
+- **Streaming (Step 3):** tokens arrive one at a time because each one comes from one pass of the loop.
+- **Cost:** I pay for every input token and every output token, and each output token is one more trip around the loop.
+- **Context window (Step 5):** each pass re-reads everything so far, so a long conversation fills the window and eventually overflows.
+
+**The 2-minute explanation.** The text is split into tokens, and each token gets an ID from a fixed vocabulary. Each ID becomes a vector (an embedding). Attention then adjusts each vector using the surrounding tokens, so `bank` next to `river` differs from `bank` next to `money`. The model uses the result to score every token in the vocabulary for what comes next and picks one, usually a high-scoring one. That token is added to the input and the model repeats the process, until it picks a stop token.
+
 ## Foundations, step by step
 
 1. **Tokenize.** `tiktoken.get_encoding("cl100k_base")`, then `enc.encode(text)` gives IDs and `enc.decode([id])` shows the piece for one ID.
@@ -69,5 +88,7 @@ The result is between -1 and 1. A high score means the vectors have large values
 - **Dimensions as labeled categories.** They have no names and values aren't limited to 0-1. Only the overall position matters.
 - **"Dimension" vs "value".** A dimension is a slot (one of 384). The number in it is the value.
 - **Average vs sum.** The similarity score is a sum of the per-dimension products, normalized by vector length. It isn't an average.
+- **"It checks the surrounding words" has a name.** That step is attention. Say the word.
+- **"The best token" isn't always chosen.** The pick is usually a high-scoring token, but temperature lets lower-scoring ones through. That's why answers vary.
 - **Wrong venv in VS Code.** The terminal can show `(.venv)` at the repo root while pointing at `00-python/.venv`, which doesn't have `tiktoken` or `sentence-transformers`. Check with `which python`, or use `Cmd+Shift+P` → `Python: Select Interpreter` and choose `02-llm-fundamentals/.venv`.
 - **No `requirements.txt`.** `sentence-transformers` pulls in many packages, so I pinned them all with `pip freeze > requirements.txt` (run inside `02-llm-fundamentals` with the right venv active).
