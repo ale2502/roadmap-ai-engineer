@@ -4,6 +4,18 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-20
+
+**Step:** Step 3: Generative API in practice (first raw API call)
+**What I did:**
+- Wrote `03-raw-api/hello.py` piece by piece: `load_dotenv()` before `anthropic.Anthropic()` (the client reads the key from the environment), then `client.messages.create(model, max_tokens, messages)`, then printed `response.content[0].text`, `response.usage` and `response.stop_reason`. Fixed the leading space in `.env.example`.
+- Predicted token counts before each run. Input is always higher than the message because the API adds a fixed overhead of about 7 tokens (`"hi"` = 8, my 9-token sentence = 16). Output varies between runs of the same prompt because the model samples (temperature). Explaining takes about 30 tokens per sentence, not 20.
+- Set `max_tokens = 30` to force truncation: `stop_reason` was `max_tokens` and the text stopped mid-sentence ("word, subword, or"). The cap counts tokens, not sentences. I first guessed it would end after the first sentence.
+- Wrote `SUMMARY-step-3-raw-api.md` with the experiments table and mix-ups. Answered the three review questions (overhead, different outputs, `max_tokens`) correctly.
+**Goal status:** in progress. `hello.py` works and the response structure is clear, but the streaming script and the fake-tool script are not written yet.
+**Stuck on / questions:** Token guesses were low every time (forgot the overhead, underestimated sentence length). I thought `.text` changed the output tokens (it was two different runs). I expected `max_tokens` to end at a sentence boundary. Still open: the Step 2 two-minute explanation without reading, the two "To do" rows in the Step 2 experiments table, `invoice` vs `fatura` (0.58), and the monthly spend limit in the Console.
+**Next session:** Set `max_tokens` in `hello.py` back to about 300. Then write `03-raw-api/stream.py` with streaming (`client.messages.stream(...)` and `stream.text_stream`). Before writing it, say what you expect to see on screen compared with `hello.py`, and what happens on the API side.
+
 ## 2026-10-19
 
 **Step:** Step 2 wrap-up, then Step 3: Generative API in practice (setup)
