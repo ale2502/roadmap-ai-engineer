@@ -4,6 +4,18 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-19
+
+**Step:** Step 2 wrap-up, then Step 3: Generative API in practice (setup)
+**What I did:**
+- Temperature: it reshapes the next-token scores before one is picked. Low temperature widens the gaps, so the top token's score goes up and the others go down. High temperature narrows them, so the top goes down and the unlikely ones go up. The scores always add up to 1, so they can't all go down. I first said "all scores go lower" for high temperature, which is wrong.
+- Gave the Step 2 two-minute explanation while reading it. Corrections: attention is a step that updates each token's vector from its neighbors (not a token), the word is autoregression (not "outer regression"), the model scores the whole vocabulary (about 100,000 tokens), and a stop token ends the loop.
+- Started Step 3 with Anthropic. Differences from the OpenAI-based roadmap: `max_tokens` is required, `system` is its own parameter, and `response.content` is a list of blocks. Current model is `claude-opus-5-5`, which always thinks and rejects `temperature`, `top_p` and `top_k` (400). For the temperature experiment use `claude-haiku-4-5`, which still accepts them.
+- Set up `03-raw-api/`: venv created with `python3 -m venv` (macOS has no `python` until the venv is active), installed `anthropic` and `python-dotenv`, added `requirements.txt` and `.env.example`. The Claude subscription and the API are billed separately, so I added $5 of API credits.
+**Goal status:** Step 2 met at a basic level. Step 3 in progress: setup done, no script written yet.
+**Stuck on / questions:** `python` not found at first (use `python3` outside a venv). Confused the subscription with API credits. Not sure what `.env.example` is for (it lists the variable names without the secret, so it can be committed). The Step 2 two-minute explanation still needs to be said without reading. The two "To do" rows in the Step 2 experiments table are still empty, and so is the `invoice` vs `fatura` (0.58) question.
+**Next session:** Write `03-raw-api/hello.py`. Call `load_dotenv()`, create `anthropic.Anthropic()`, send one message and print the text and `response.usage`, after predicting the input and output token counts. Check that `.env.example` has no leading space before `ANTHROPIC_API_KEY=`, and set a monthly spend limit in the Console.
+
 ## 2026-10-17
 
 **Step:** Step 2: LLM fundamentals (transformer basics)
