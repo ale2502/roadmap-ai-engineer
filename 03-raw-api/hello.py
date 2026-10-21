@@ -7,7 +7,7 @@ client = anthropic.Anthropic()
 
 response = client.messages.create(
   model = "claude-haiku-4-5",
-  max_tokens = 30,
+  max_tokens = 300,
   messages = [
     {"role": "user", "content": "Explain what a token is in three sentences"}
   ],

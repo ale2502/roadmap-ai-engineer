@@ -4,6 +4,17 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-10-21
+
+**Step:** Step 3: Generative API in practice (streaming and tool calling)
+**What I did:**
+- Set `max_tokens` in `hello.py` back to 300. Wrote `03-raw-api/stream.py` with `client.messages.stream(...)` as a `with` block and a `for` loop over `stream.text_stream`, printing with `end=""` and `flush=True`. Streaming doesn't change how the model generates (always one token at a time). It only sends each chunk as soon as it's ready, so the first words show up much sooner while the total time stays about the same. `flush` pushes buffered output to the screen right away. I didn't see a difference because Haiku is fast, and I skipped the slow-down experiment.
+- Wrote `03-raw-api/tool_call.py`: a fake `get_weather(city)` that returns (not prints) a string, a `tools` list with a JSON Schema `input_schema`, and a first call that returned `stop_reason: tool_use` and a `ToolUseBlock` (`id`, `name`, `input={'city': 'Paris'}`). Fixed the tool description, which promised a forecast the function doesn't give.
+- Learned that the model never runs the tool. Only the `tools` description is sent, and the Python function stays on my machine. I proved it by commenting out the function and getting the same `tool_use` block. My script runs the function, then a second call sends the history (user question, the assistant's `tool_use` block, a user `tool_result` with `tool_use_id`) and gets the final answer with `end_turn`.
+**Goal status:** met for both scripts (streaming and fake tool call work). Structured output is still left in Step 3, and I haven't answered the goal-check question yet.
+**Stuck on / questions:** I thought the model ran `get_weather` because the names matched. I passed the whole `input` dict instead of `input["city"]`. I mixed up "three messages" with three variables (it's two API calls, and the second sends a three-entry `messages` list). I predicted `end_turn` for the first tool call. The model added "64°F" and "nice day" that weren't in the tool result. `tool_block = response.content[0]` assumes there's no text block first. The Step 3 summary file doesn't cover streaming or tool calling yet.
+**Next session:** Answer the goal-check question in my own words, without reading: what does it mean for a model to "call a tool", who runs the function, and why does it take two API calls? Then add streaming and tool calling to `SUMMARY-step-3-raw-api.md` and start structured output.
+
 ## 2026-10-20
 
 **Step:** Step 3: Generative API in practice (first raw API call)
