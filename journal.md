@@ -4,6 +4,18 @@ Session log for the AI Engineering roadmap. Newest entries first. Claude reads t
 
 <!-- New entries go directly below this line. -->
 
+## 2026-11-05
+
+**Step:** Step 3: Generative API in practice (structured output)
+**What I did:**
+- Came back after two weeks off and got a recap of Steps 0, 2 and 3 in chat (not saved as a file).
+- Fixed a broken venv. The repo had moved from `~/Desktop/...` to `~/Documents/Desktop/...`, and venvs save their absolute path, so `activate` pointed to a folder that no longer exists and `which python` found nothing. I rebuilt `03-raw-api/.venv` from `requirements.txt`. Also learned to `source .venv/bin/activate`, not `.venv/bin/python`.
+- Went through `tool_call.py` again. Claude printed the real response to show how to reach `"Paris"`: `response.content` (a list) → `[0]` (a `ToolUseBlock` object) → `.input` (an attribute, a dict) → `["city"]` (a key). Use a dot for object attributes and brackets for list positions and dict keys.
+- Started structured output: `output_config={"format": {"type": "json_schema", "schema": ...}}` on `messages.create` (works on `claude-haiku-4-5`, no beta header). I couldn't fill in the scaffold, so Claude completed `03-raw-api/structured.py`. It extracts `vendor`, `amount`, `currency` and `due_date` from an invoice sentence. The reply is a JSON string (`str`), and `json.loads` turns it into a `dict`.
+**Goal status:** Step 3 goal met (streaming and fake tool call). Structured output works, but Claude wrote it and I haven't explained it yet.
+**Stuck on / questions:** I'd forgotten most of Step 3 and couldn't focus today. Still unanswered: the tool-call goal check (what "calling a tool" means, who runs the function, why two calls) and "why do you need `json.loads()` before `data["amount"]`?" The `00-python` and `02-llm-fundamentals` venvs are also broken by the move, so rebuild them when needed. `SUMMARY-step-3-raw-api.md` still doesn't cover streaming, tool calling or structured output.
+**Next session:** Start with a short re-explanation of `tool_call.py` and `structured.py`, then answer both check questions in my own words and add the three topics to the Step 3 summary before Step 4.
+
 ## 2026-10-21
 
 **Step:** Step 3: Generative API in practice (streaming and tool calling)
